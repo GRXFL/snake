@@ -16,24 +16,27 @@ namespace Snake
             Console.SetWindowSize(80, 25);
             Console.CursorVisible = false;
 
-
-            //отрисовка рамок
-            HorizontalLine downline = new HorizontalLine(0, 78, 24, '+');
-            HorizontalLine upline = new HorizontalLine(0, 78, 0, '+');
-            VerticalLines leftline = new VerticalLines(0, 24, 0, '+');
-            VerticalLines rightline = new VerticalLines(0, 24, 78, '+');
-
-            upline.Drow();
-            downline.Drow();
-            leftline.Drow();
-            rightline.Drow();
+            VerticalLines vl = new VerticalLines(0, 10, 5, '%');
+            Draw(vl);
 
 
-            //отрисовка точек
             Point p = new Point(4, 5, '*');
-            Snake snake = new Snake(p, 4, Direction.RIGHT);
-            snake.Drow();
-            snake.Move();
+            Figure fSnake = new Snake(p, 4, Direction.RIGHT);
+            Draw(fSnake);
+            Snake snake = (Snake)fSnake;
+
+            HorizontalLine hl = new HorizontalLine(0, 5, 6, '&');
+
+            List<Figure> figures = new List<Figure>();   
+            figures.Add(fSnake);
+            figures.Add(hl);
+            figures.Add(vl);
+
+            foreach(var f in figures)
+            {
+                f.Draw();
+            }
+
 
 
             //движение и еда
@@ -65,6 +68,10 @@ namespace Snake
                     else if (key.Key == ConsoleKey.DownArrow)
                         snake.direction = Direction.DOWN;
                 }
+            }
+            static void Draw(Figure figure)
+            {
+                figure.Draw();
             }
 
         }
