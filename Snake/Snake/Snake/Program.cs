@@ -36,24 +36,37 @@ namespace Snake
             snake.Move();
 
 
-            //движение
+            //движение и еда
+            FoodCreator foodCreator = new FoodCreator(80, 25, '@');
+            Point food = foodCreator.CreateFood();
+            food.Draw();
             while(true)
             {
-                if(Console.KeyAvailable)
+                if(snake.Eat(food))
                 {
-                    ConsoleKeyInfo key = Console.ReadKey(true);
-                    if( key.Key == ConsoleKey.LeftArrow)
-                        snake.direction = Direction.LEFT;
-                    else if( key.Key == ConsoleKey.RightArrow)
-                        snake.direction = Direction.RIGHT;
-                    else if(key.Key == ConsoleKey.UpArrow)
-                        snake.direction = Direction.UP;
-                    else if(key.Key == ConsoleKey.DownArrow)
-                        snake.direction = Direction.DOWN;
+                    food = foodCreator .CreateFood();
+                    food.Draw();
+                }
+                else
+                {
+                    snake.Move();
                 }
                 Thread.Sleep(100);
-                snake.Move();
+
+                if (Console.KeyAvailable)
+                {
+                    ConsoleKeyInfo key = Console.ReadKey(true);
+                    if (key.Key == ConsoleKey.LeftArrow)
+                        snake.direction = Direction.LEFT;
+                    else if (key.Key == ConsoleKey.RightArrow)
+                        snake.direction = Direction.RIGHT;
+                    else if (key.Key == ConsoleKey.UpArrow)
+                        snake.direction = Direction.UP;
+                    else if (key.Key == ConsoleKey.DownArrow)
+                        snake.direction = Direction.DOWN;
+                }
             }
+
         }
     }
 }
